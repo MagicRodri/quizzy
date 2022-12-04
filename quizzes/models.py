@@ -39,3 +39,6 @@ class Answer(BaseModel):
     question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
     content = models.CharField(max_length=256)
     correct = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return self.content
