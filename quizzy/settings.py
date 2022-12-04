@@ -23,6 +23,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # Third party
+
+    # internal
+    'core',
+    'accounts',
+    'quizzes',
 ]
 
 MIDDLEWARE = [
@@ -110,3 +117,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # New user model
 AUTH_USER_MODEL = 'accounts.User'
+
+
+from .settings_local import *  # noqa
