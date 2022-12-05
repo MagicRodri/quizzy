@@ -1,18 +1,36 @@
 {% extends '_base.html' %}
 
 {% block content %}
-    <div>
+    <div class="row row-cols-1 row-cols-md-3 m-3 text-center">
         {% for testing in testings %}
-            <div>
-                <h1>{{testing}}</h1>
-                <div>
-                    <p>Total questions:{{testing.total_questions}}</p>
-                    <p>Correct answers:{{testing.total_correct}}</p>
-                    <p>Score: {{testing.score}}</p>
-                    {% if not testing.finished %}
-                        <p>Test not completed, resume it?</p>
-                        <a class="btn btn-primary" href={{testing.quiz.get_absolute_url}}>Resume</a>
-                    {% endif %}
+            <div class="card mb-4 rounded-3 shadow-sm border-primary">
+                <div class="card-header py-3 text-white bg-primary border-primary">
+                <h4 class="my-0 fw-normal">{{testing}}</h4>
+                </div>
+                <div class="card-body">
+                {% if testing.finished %}
+                    <h1 class="card-title pricing-card-title">
+                        {% if testing.passed %}
+                            Succeeded
+                        {% else %}
+                            Failed
+                        {% endif %}
+                    </h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Total questions:{{testing.total_questions}}</li>
+                        <li>Total answered:{{testing.answers.count}}</li>
+                        <li>Correct answers:{{testing.total_correct}}</li>
+                        <li>Score: {{testing.score}}</li>
+                    </ul>
+                    <a href='#' class="w-100 btn btn-lg btn-primary">Detail</a>
+                {% else %}
+                    <h1 class="card-title pricing-card-title">Ongoing</h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>Total questions:{{testing.total_questions}}</li>
+                            <li>Total answered:{{testing.answers.count}}</li>
+                        </ul>
+                    <a href={{testing.quiz.get_absolute_url}} class="w-100 btn btn-lg btn-primary">Resume</a>
+                {% endif %}
                 </div>
             </div>
         {% endfor %}

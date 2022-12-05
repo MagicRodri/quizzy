@@ -99,7 +99,7 @@ class Testing(BaseModel):
 
     @property
     def passed(self):
-        return self.score >= self.quiz.pass_score
+        return float(self.score) >= self.quiz.pass_score
 
     # def result(self):
     #     correct = 0
