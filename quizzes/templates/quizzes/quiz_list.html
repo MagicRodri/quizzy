@@ -10,6 +10,7 @@
                 <p>Name:{{quiz.name}}</p>
                 <p>Subject:{{quiz.subject}}</p>
                 <p>Pass score:{{quiz.pass_score}}</p>
+                <a href={{quiz.get_absolute_url}}> Start test </a>
             </div>
             
         {% endfor %}

@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Q
+from django.urls import reverse
 
 from core.models import BaseModel
 
@@ -27,6 +28,10 @@ class Quiz(BaseModel):
     def __str__(self) -> str:
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("quizzes:display-question", kwargs={"pk": self.pk})
+    
+
 class Question(BaseModel):
 
 
@@ -39,7 +44,7 @@ class Question(BaseModel):
 class Option(BaseModel):
 
 
-    question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
     content = models.CharField(max_length=256)
     correct = models.BooleanField(default=False)
 
@@ -52,5 +57,23 @@ class Answer(BaseModel):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     options = models.ManyToManyField(
         Option,
-        blank=True
     )
+
+    @property
+    def is_correct(self):
+        correct_answered = self.options.filter(correct = True).count()
+        correct_set = self.question.options.filter( correct = True).count()
+        return (correct_answered == correct_set) and (correct_set != self.question.options.count())
+
+class Testing(BaseModel):
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    answered_questions = models.ManyToManyField(Question, blank=True)
+
+
+    # def result(self):
+    #     correct = 0
+    #     incorrect = 0
+    #     quiz_questions = self.quiz.questions.all()
+    #     for answer in Answer.objects.filter(user = self.user, quiz = )

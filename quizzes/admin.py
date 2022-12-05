@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .forms import AdminOptionForm, AdminQuestionForm, AnswerForm, OptionInlineFormSet
-from .models import Answer, Option, Question, Quiz
+from .models import Answer, Option, Question, Quiz, Testing
 
 # Register your models here.
 
@@ -32,3 +32,4 @@ admin.site.register(Question,QuestionAdmin)
 admin.site.register(Quiz,QuizAdmin)
 admin.site.register(Option)
 admin.site.register(Answer)
+admin.site.register(Testing)
