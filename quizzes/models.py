@@ -70,7 +70,32 @@ class Testing(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     answered_questions = models.ManyToManyField(Question, blank=True)
+    answers = models.ManyToManyField(Answer, blank=True)
+    finished = models.BooleanField(default=False)
 
+    def __str__(self) -> str:
+        return f'Quiz:{self.quiz} User:{self.user} time:{self.created_at.ctime()}'
+    
+    @property
+    def total_correct(self):
+        
+        count = 0
+        for ans in self.answers.all():
+            if ans.is_correct:
+                count+=1
+        return count
+
+    @property
+    def total_questions(self):
+        return self.quiz.questions.count()
+
+    @property
+    def score(self):
+        return (self.total_correct/self.total_questions) * 100
+
+    @property
+    def passed(self):
+        return self.score >= self.quiz.pass_score
 
     # def result(self):
     #     correct = 0

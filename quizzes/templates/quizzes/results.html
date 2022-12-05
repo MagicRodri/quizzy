@@ -1,0 +1,16 @@
+{% extends '_base.html' %}
+
+{% block content %}
+    <div>
+        {% for testing in testings %}
+            <div>
+                <h1>{{testing}}</h1>
+                <div>
+                    <p>Total questions:{{testing.total_questions}}</p>
+                    <p>Correct answers:{{testing.total_correct}}</p>
+                    <p>Score: {{testing.score}}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

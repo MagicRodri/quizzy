@@ -18,14 +18,19 @@ def quiz_list(request):
 def display_questions(request, pk):
 
     quiz = get_object_or_404(Quiz, pk=pk)
-    testing,created = Testing.objects.get_or_create(user = request.user, quiz = quiz)
+    # Create or grab ongoing testing for the given quiz
+    testing,created = Testing.objects.get_or_create(user = request.user, quiz = quiz, finished = False)
     context = {}
+    # Remove answered questions from the quiz's questions set
     remaining_questions = quiz.questions.all().difference(testing.answered_questions.all())
-    print('r',remaining_questions)
+
     if remaining_questions.exists():
         current_question = remaining_questions.first()
         answer_form = AnswerForm(initial={'question':current_question})    
+        
         if request.method == 'POST':
+
+            # If request is post, feed answer form and save answer if it's valid then redirect to this same view
             answer_form = AnswerForm(request.POST,initial={'question':current_question})
             if answer_form.is_valid():
                 answer = answer_form.save(commit=False)
@@ -33,25 +38,21 @@ def display_questions(request, pk):
                 answer.question = current_question
                 answer.save()
                 answer_form.save_m2m()
-                print('a:',answer.is_correct)
                 testing.answered_questions.add(current_question)
+                testing.answers.add(answer)
                 testing.save()
                 return redirect(quiz.get_absolute_url())
         context['answer_form'] = answer_form
         context['question'] = current_question
-        return render(request,'quizzes/answer_question.html', context=context)
+        return render(request,'quizzes/display_questions.html', context=context)
 
     else:
+        # If no question remaining then redirect to
+        testing.finished = True
+        testing.save()
         return redirect(reverse('quizzes:quiz-list'))
 
-def answer_question(request,pk):
-    question = get_object_or_404(Question,pk=pk)
-    answer_form = AnswerForm(initial={'question':question})
+def results(request):
+    testings = Testing.objects.filter(user = request.user)
 
-
-    context = {
-        'answer_form':answer_form,
-        'question':question
-    }
-
-    return render(request,'quizzes/answer_question.html', context=context)
+    return render(request, 'quizzes/results.html', context={'testings': testings})

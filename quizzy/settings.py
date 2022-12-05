@@ -70,10 +70,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'quizzy',
-        'USER' : os.environ.get('DATABASE_USER'),
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
-        'HOST' : os.environ.get('DATABASE_HOST'),
-        'PORT' : int(os.environ.get('DATABASE_PORT')),
+        'USER' : os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST' : os.getenv('DATABASE_HOST'),
+        'PORT' : int(os.getenv('DATABASE_PORT')),
         
         'ATOMIC_REQUESTS':True,
     }
