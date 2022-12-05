@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
@@ -14,13 +15,16 @@ def quiz_list(request):
     }
     return render(request,'quizzes/quiz_list.html',context=context)
 
-
+@login_required
 def display_questions(request, pk):
 
     quiz = get_object_or_404(Quiz, pk=pk)
     # Create or grab ongoing testing for the given quiz
     testing,created = Testing.objects.get_or_create(user = request.user, quiz = quiz, finished = False)
-    context = {}
+    context = {
+        'total':quiz.total_questions,
+        'current': testing.answered_questions.count() + 1
+    }
     # Remove answered questions from the quiz's questions set
     remaining_questions = quiz.questions.all().difference(testing.answered_questions.all())
 
@@ -50,8 +54,9 @@ def display_questions(request, pk):
         # If no question remaining then redirect to
         testing.finished = True
         testing.save()
-        return redirect(reverse('quizzes:quiz-list'))
-
+        return redirect(reverse('quizzes:results'))
+        
+@login_required
 def results(request):
     testings = Testing.objects.filter(user = request.user)
 

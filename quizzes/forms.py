@@ -63,3 +63,6 @@ class AnswerForm(forms.ModelForm):
     class Meta:
         model = Answer
         fields = ['options']
+        widgets = {
+            'options':forms.CheckboxSelectMultiple()
+        }

@@ -30,6 +30,10 @@ class Quiz(BaseModel):
 
     def get_absolute_url(self):
         return reverse("quizzes:display-question", kwargs={"pk": self.pk})
+
+    @property
+    def total_questions(self):
+        return self.questions.count()
     
 
 class Question(BaseModel):
@@ -87,11 +91,11 @@ class Testing(BaseModel):
 
     @property
     def total_questions(self):
-        return self.quiz.questions.count()
+        return self.quiz.total_questions
 
     @property
     def score(self):
-        return (self.total_correct/self.total_questions) * 100
+        return '%.2f' % ((self.total_correct/self.total_questions) * 100)
 
     @property
     def passed(self):

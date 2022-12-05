@@ -2,19 +2,26 @@
 
 
 {% block content %}
-    <div>
-        <h1>Quiz list</h1>
-        <hr>
+
+
+    <div class="row row-cols-1 row-cols-md-3 m-3 text-center">
         {% for quiz in quizzes %}
-            <div>
-                <p>Name:{{quiz.name}}</p>
-                <p>Subject:{{quiz.subject}}</p>
-                <p>Pass score:{{quiz.pass_score}}</p>
-                <a href={{quiz.get_absolute_url}}> Start test </a>
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">{{quiz.name}}</h4>
+                    </div>
+                    <div class="card-body">
+                    <h1 class="card-title pricing-card-title">Pass score:{{quiz.pass_score}}%</h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Subject:{{quiz.subject}}</li>
+                        <li>Number of questions:{{quiz.total_questions}}</li>
+                    </ul>
+                    <a href={{quiz.get_absolute_url}} class="w-100 btn btn-lg btn-outline-primary">Start test</a>
+                    </div>
+                </div>
             </div>
-            
         {% endfor %}
     </div>
-
 {% endblock content %}
 

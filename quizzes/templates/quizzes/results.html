@@ -9,6 +9,10 @@
                     <p>Total questions:{{testing.total_questions}}</p>
                     <p>Correct answers:{{testing.total_correct}}</p>
                     <p>Score: {{testing.score}}</p>
+                    {% if not testing.finished %}
+                        <p>Test not completed, resume it?</p>
+                        <a class="btn btn-primary" href={{testing.quiz.get_absolute_url}}>Resume</a>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
