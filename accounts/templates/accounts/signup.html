@@ -1,0 +1,20 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block css %}
+    
+{% endblock css %}
+
+{% block content %}
+
+    {% if not request.user.is_authenticated %}
+        <form action="" method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit">Register</button>
+        </form>
+        <p class="signup_link">Already have an account? <a href={% url 'accounts:login' %}>Login<a/></p>
+    {% else %}
+        <p>You are already signed in. Do you wanna <a href={% url 'accounts:logout' %}>logout</a>?</p>
+    {% endif %}
+{% endblock content %}

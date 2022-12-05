@@ -1,23 +1,23 @@
 from django.contrib import admin
 
-from .forms import AdminAnswerForm, AdminQuestionForm, AnswerInlineFormSet
-from .models import Answer, Question, Quiz
+from .forms import AdminOptionForm, AdminQuestionForm, AnswerForm, OptionInlineFormSet
+from .models import Answer, Option, Question, Quiz
 
 # Register your models here.
 
 
 
-class AnswerInline(admin.TabularInline):
+class OptionInline(admin.TabularInline):
     
-    form = AdminAnswerForm
-    formset = AnswerInlineFormSet
-    model = Answer
+    form = AdminOptionForm
+    formset = OptionInlineFormSet
+    model = Option
     extra = 1
 
 class QuestionAdmin(admin.ModelAdmin):
 
     form = AdminQuestionForm
-    inlines = [AnswerInline]
+    inlines = [OptionInline]
 
 class QuestionInline(admin.TabularInline):
 
@@ -30,4 +30,5 @@ class QuizAdmin(admin.ModelAdmin):
 
 admin.site.register(Question,QuestionAdmin)
 admin.site.register(Quiz,QuizAdmin)
+admin.site.register(Option)
 admin.site.register(Answer)

@@ -1,0 +1,44 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block css %}
+    
+{% endblock css %}
+
+{% block content %}
+    {% if not request.user.is_authenticated %}
+        <h1>Login</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="form__field username">
+                {{ form.username.errors }}
+                
+                {{ form.username }}
+                <span></span>
+                <label for="{{ form.username.id_for_label }}">Username</label>
+            </div>
+
+            <div class="form__field password">
+                {{ form.password.errors }}
+
+                {{ form.password }}
+                <span></span>
+                <label for="{{ form.password.id_for_label }}">Password</label>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <a href="#" class="pass">Forgot password?</a>
+        <p class="signup_link">Don't have an account? <a href={% url 'accounts:signup' %}>Sign up<a/></p>
+    {% else %}
+        <p>You are already logged in. Do you wanna <a href={% url 'accounts:logout' %}>logout</a>?</p>
+    {% endif %}
+    
+{% endblock content %}
+
+{% block js %}
+            <script>
+                
+            </script>
+{% endblock js %}

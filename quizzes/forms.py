@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Answer, Question
+from .models import Answer, Option, Question
 
 
 class AdminQuestionForm(forms.ModelForm):
@@ -16,10 +16,10 @@ class AdminQuestionForm(forms.ModelForm):
         return super().clean()
 
 
-class AdminAnswerForm(forms.ModelForm):
+class AdminOptionForm(forms.ModelForm):
 
     class Meta:
-        model = Answer
+        model = Option
         fields = '__all__'
 
     
@@ -28,7 +28,7 @@ class AdminAnswerForm(forms.ModelForm):
         return super().clean()
 
 
-class AnswerInlineFormSet(forms.models.BaseInlineFormSet):
+class OptionInlineFormSet(forms.models.BaseInlineFormSet):
 
     def clean(self) -> None:
         super().clean()
@@ -42,8 +42,24 @@ class AnswerInlineFormSet(forms.models.BaseInlineFormSet):
                 if cleaned_data.get('correct'):
                     correct += 1
         if valid < 2:
-            raise forms.ValidationError('At least two answers variants required.')
+            raise forms.ValidationError('At least two Options variants required.')
         elif correct == 0:
-            raise forms.ValidationError('At least 1 correct answer required.')
+            raise forms.ValidationError('At least 1 correct Option required.')
         elif correct == valid:
-            raise forms.ValidationError('At least 1 wrong answer required')
+            raise forms.ValidationError('At least 1 wrong Option required')
+
+
+class AnswerForm(forms.ModelForm):
+
+    def __init__(self,*args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print(kwargs)
+
+        # grab initial question in order to limit options choices, initial set before first form rendering
+        question = kwargs.get('initial').get('question')
+        if question:
+            self.fields['options'].queryset = Option.objects.filter(question=question)
+
+    class Meta:
+        model = Answer
+        fields = ['options']

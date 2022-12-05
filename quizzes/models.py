@@ -1,9 +1,12 @@
+from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models import Q
 
 from core.models import BaseModel
 
 # Create your models here.
+User = get_user_model()
 
 class Quiz(BaseModel):
 
@@ -33,7 +36,7 @@ class Question(BaseModel):
     def __str__(self) -> str:
         return self.content
 
-class Answer(BaseModel):
+class Option(BaseModel):
 
 
     question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
@@ -42,3 +45,12 @@ class Answer(BaseModel):
 
     def __str__(self) -> str:
         return self.content
+
+class Answer(BaseModel):
+    
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    options = models.ManyToManyField(
+        Option,
+        blank=True
+    )
