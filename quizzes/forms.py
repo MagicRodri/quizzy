@@ -56,7 +56,6 @@ class AnswerForm(forms.ModelForm):
 
     def __init__(self,*args, **kwargs):
         super().__init__(*args, **kwargs)
-        print(kwargs)
 
         # grab initial question in order to limit options choices, initial set before first form rendering
         question = kwargs.get('initial').get('question')
