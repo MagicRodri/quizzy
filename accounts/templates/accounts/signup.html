@@ -19,15 +19,20 @@
             
             <form action="" method="post" class="p-4 p-md-5 border rounded-3 bg-light">
                 {% csrf_token %}
+                {{ form.non_field_errors }}
+
                 <div class="form-floating mb-2">
+                    {{form.username.errors}}
                     {{form.username}}
                     <label for="username">Username</label>
                 </div>
                 <div class="form-floating mb-2">
+                    {{ form.password1.errors }}
                     {{ form.password1 }}
                     <label for="password1">Password</label>
                 </div>
                 <div class="form-floating mb-2">
+                    {{ form.password2.errors }}
                     {{ form.password2 }}
                     <label for="password2">Confirm password</label>
                 </div>
