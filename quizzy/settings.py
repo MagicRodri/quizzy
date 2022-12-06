@@ -2,11 +2,7 @@
 import os
 from pathlib import Path
 
-import dotenv
-
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-dotenv.read_dotenv(BASE_DIR / '.env')
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
@@ -123,5 +119,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
 
 CSRF_TRUSTED_ORIGINS = [
-    'https//:quizzy.up.railway.app'
+    'https://quizzy.up.railway.app'
 ]
