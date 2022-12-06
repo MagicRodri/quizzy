@@ -1,1 +1,1 @@
-python manage.py migrate && gunicorn quizzy.wsgi
+web:python manage.py migrate && gunicorn quizzy.wsgi
