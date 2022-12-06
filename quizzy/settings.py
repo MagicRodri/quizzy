@@ -2,19 +2,19 @@
 import os
 from pathlib import Path
 
+import dotenv
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+dotenv.read_dotenv(BASE_DIR / '.env')
 
-SECRET_KEY = os.getenv('SECRET_KEY','django-insecure-1w%4c4j**s+u=d*h*$(^ta0cf0p9+r25#4mlhhbd=z9bz=*e2r')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.getenv('DEBUG','0')))
 
-ALLOWED_HOSTS = []
-
-if not DEBUG:
-    ALLOWED_HOSTS += [os.getenv('ALLOWED_HOSTS')]
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -123,5 +123,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # New user model
 AUTH_USER_MODEL = 'accounts.User'
 
-
+CSRF_TRUSTED_ORIGINS = [
+    ''
+]
 from .settings_local import *  # noqa
