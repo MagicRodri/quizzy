@@ -38,6 +38,12 @@
         
     </header>
     <main>
+        {% if request.user.is_authenticated %}
+        <div>
+            <p class="fs-1">Online:{{request.user.username}}</p>
+        </div>
+        <hr>
+        {% endif %}
         {% block content %}
         {% endblock content %}
     </main>

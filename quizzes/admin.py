@@ -22,7 +22,8 @@ class QuestionAdmin(admin.ModelAdmin):
 class QuestionInline(admin.TabularInline):
 
     model = Question
-    extra = 1
+    show_change_link = True
+    extra = 0
 
 class QuizAdmin(admin.ModelAdmin):
     inlines = [QuestionInline]
