@@ -27,7 +27,7 @@ DATABASE_NAME=my_db_name
 DATABASE_USER=my_db_user
 DATABASE_PASSWORD=my_db_password
 DATABASE_HOST = my_db_localhost
-DATABASE_PORT = my_db_5434
+DATABASE_PORT = my_db_port
 ```
 ### - Run migrations and run server
 ```bash
@@ -35,9 +35,9 @@ DATABASE_PORT = my_db_5434
 (venv) python manage.py runserver
 ```
 
-### 
+### Demo version available on [quizzy](https://quizzy.up.railway.app/).
 
 ## Features to add/improve :
-    - [] Illustrative image for quizzes
-    - [] Answers viewing after test complete
-    - [] Answers editing before test ends up
+- [ ] Illustrative image for quizzes
+- [ ] Answers viewing after test complete
+- [ ] Answers editing before test ends up
