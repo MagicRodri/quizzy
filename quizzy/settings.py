@@ -123,6 +123,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
 
 CSRF_TRUSTED_ORIGINS = [
-    ''
+    'https//:quizzy.up.railway.app'
 ]
-from .settings_local import *  # noqa
